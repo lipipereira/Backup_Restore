@@ -1,0 +1,31 @@
+unit uPadrao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls,TDI, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TfrmPadrao = class(TForm)
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPadrao: TfrmPadrao;
+  FDI:TTDI;
+implementation
+
+{$R *.dfm}
+
+
+procedure TfrmPadrao.BitBtn1Click(Sender: TObject);
+begin
+FDI.Fechar(False);
+end;
+
+end.

@@ -1,0 +1,131 @@
+object frmTelaInicio: TfrmTelaInicio
+  Left = 0
+  Top = 0
+  BorderStyle = bsSingle
+  Caption = 'SisCaixa'
+  ClientHeight = 467
+  ClientWidth = 902
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  Menu = MainMenu1
+  OldCreateOrder = False
+  Position = poScreenCenter
+  WindowState = wsMaximized
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 902
+    Height = 81
+    Align = alTop
+    TabOrder = 0
+    object btnGrupo: TBitBtn
+      Left = 0
+      Top = 0
+      Width = 99
+      Height = 81
+      Caption = 'Grupo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      OnClick = btnGrupoClick
+    end
+    object btnConta: TBitBtn
+      Left = 107
+      Top = 0
+      Width = 99
+      Height = 81
+      Caption = 'Conta'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      OnClick = btnContaClick
+    end
+    object btnMovimento: TBitBtn
+      Left = 213
+      Top = 0
+      Width = 108
+      Height = 81
+      Caption = 'Movimento'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      OnClick = btnMovimentoClick
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 81
+    Width = 902
+    Height = 386
+    Align = alClient
+    TabOrder = 1
+    ExplicitLeft = 496
+    ExplicitTop = 104
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object Label1: TLabel
+      Left = 368
+      Top = 160
+      Width = 145
+      Height = 33
+      Alignment = taCenter
+      Caption = 'SisCaixa'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -27
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      Layout = tlCenter
+    end
+  end
+  object MainMenu1: TMainMenu
+    Left = 32
+    Top = 144
+    object Cadastros1: TMenuItem
+      Caption = 'Cadastros'
+      object Grupo1: TMenuItem
+        Caption = 'Grupo'
+        OnClick = Grupo1Click
+      end
+      object Conta1: TMenuItem
+        Caption = 'Conta'
+        OnClick = Conta1Click
+      end
+      object Movimentao2: TMenuItem
+        Caption = 'Movimenta'#231#227'o'
+        OnClick = Movimentao2Click
+      end
+    end
+    object Relatorio1: TMenuItem
+      Caption = 'Relatorio'
+      OnClick = Relatorio1Click
+    end
+    object Movimentos1: TMenuItem
+      object Movimentao1: TMenuItem
+      end
+    end
+  end
+end

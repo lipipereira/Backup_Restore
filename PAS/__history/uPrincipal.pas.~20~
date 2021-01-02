@@ -1,0 +1,34 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,TDI, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    MainMenu1: TMainMenu;
+    este1: TMenuItem;
+    este11: TMenuItem;
+    este21: TMenuItem;
+    BitBtn1: TBitBtn;
+    Panel1: TPanel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  FDI:TTDI;
+
+implementation
+
+{$R *.dfm}
+
+uses uPadrao, uPagina2, uPagina3, uLibrary;
+
+end.

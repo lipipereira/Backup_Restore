@@ -1,0 +1,45 @@
+unit uMovimentacao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Grids, Vcl.DBGrids;
+
+type
+  TfrmMovimentacao = class(TForm)
+    DBGrid1: TDBGrid;
+    btnInserir: TBitBtn;
+    btnAlterar: TBitBtn;
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnInserirClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMovimentacao: TfrmMovimentacao;
+
+implementation
+
+{$R *.dfm}
+
+uses uBancoDados, uLibrary, uTrataException, uClasseMovimentacao,
+  uCadastroMovimentacao;
+
+procedure TfrmMovimentacao.btnInserirClick(Sender: TObject);
+begin
+  CriarForm(T,frmMovimetacao);
+end;
+
+procedure TfrmMovimentacao.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+    Close;
+end;
+
+end.

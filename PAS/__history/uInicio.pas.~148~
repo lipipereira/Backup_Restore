@@ -1,0 +1,60 @@
+unit uInicio;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ComCtrls,
+  Vcl.Grids, Vcl.ValEdit;
+
+type
+  TForm1 = class(TForm)
+    ListBox1: TListBox;
+    DBListBox1: TDBListBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    ListView1: TListView;
+    Label3: TLabel;
+    ValueListEditor1: TValueListEditor;
+    Label4: TLabel;
+    DBLookupListBox1: TDBLookupListBox;
+    Label5: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+uses U_BANCO;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+//DBListBox1.Items:=DM.cdsBan.FieldList;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+DBListBox1.Clear; //Limpa a lista de items do clbItems
+   with DM.SQLQuery1 do begin
+    Open; //Abre o cdsCustomer
+    First;
+    While not Eof do begin
+      DBListBox1.Items.Add(' Banco: ' + FieldByName('nmban').AsString  +
+       ' Saldo: R$' + FieldByName('sum').AsString);//Adiciona o valor do campo
+
+      Next;
+    end;
+    Close; //Fecha o cdsCustomer
+   end;
+end;
+
+end.

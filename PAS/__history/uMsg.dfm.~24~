@@ -1,0 +1,236 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Form2'
+  ClientHeight = 335
+  ClientWidth = 575
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnlIcones: TPanel
+    Left = 0
+    Top = 0
+    Width = 70
+    Height = 295
+    Align = alLeft
+    BevelOuter = bvNone
+    Caption = 'pnlIcones'
+    TabOrder = 0
+    ExplicitHeight = 161
+  end
+  object pnlMensagem: TPanel
+    Left = 70
+    Top = 0
+    Width = 505
+    Height = 295
+    Align = alClient
+    BevelOuter = bvNone
+    BorderWidth = 10
+    TabOrder = 1
+    ExplicitLeft = 8
+    ExplicitTop = -64
+    object txtMensagem: TLabel
+      Left = 10
+      Top = 10
+      Width = 485
+      Height = 13
+      Align = alTop
+      Caption = 'txtMensagem'
+      ExplicitWidth = 65
+    end
+    object Label1: TLabel
+      Left = 32
+      Top = 184
+      Width = 31
+      Height = 13
+      Caption = 'Label1'
+    end
+    object Label2: TLabel
+      Left = 32
+      Top = 216
+      Width = 31
+      Height = 13
+      Caption = 'Label2'
+    end
+    object CheckListBox1: TCheckListBox
+      Left = 13
+      Top = 48
+      Width = 180
+      Height = 107
+      OnClickCheck = CheckListBox1ClickCheck
+      Flat = False
+      ItemHeight = 13
+      Items.Strings = (
+        '')
+      TabOrder = 0
+      OnClick = CheckListBox1Click
+    end
+    object ListBox1: TListBox
+      Left = 199
+      Top = 48
+      Width = 121
+      Height = 107
+      ItemHeight = 13
+      TabOrder = 1
+    end
+  end
+  object pnlBotoes: TPanel
+    Left = 0
+    Top = 295
+    Width = 575
+    Height = 40
+    Align = alBottom
+    BevelOuter = bvLowered
+    Caption = 'pnlBotoes'
+    TabOrder = 2
+    ExplicitTop = 161
+    ExplicitWidth = 344
+    object btnSim: TBitBtn
+      Left = 48
+      Top = 6
+      Width = 75
+      Height = 29
+      Caption = '&Sim'
+      ModalResult = 6
+      TabOrder = 0
+      Visible = False
+    end
+    object btnNao: TBitBtn
+      Left = 129
+      Top = 6
+      Width = 75
+      Height = 29
+      Caption = '&N'#227'o'
+      TabOrder = 1
+      Visible = False
+    end
+    object btnOk: TBitBtn
+      Left = 224
+      Top = 6
+      Width = 75
+      Height = 29
+      Caption = '&Ok'
+      Default = True
+      ModalResult = 7
+      TabOrder = 2
+      Visible = False
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = ClientDataSet1
+    Left = 518
+    Top = 256
+  end
+  object DataSetProvider1: TDataSetProvider
+    DataSet = SQLQuery1
+    Left = 518
+    Top = 176
+  end
+  object SQLConnection1: TSQLConnection
+    ConnectionName = 'Banco'
+    DriverName = 'Firebird'
+    LoginPrompt = False
+    Params.Strings = (
+      'DriverName=Firebird'
+      'DriverUnit=Data.DBXFirebird'
+      
+        'DriverPackageLoader=TDBXDynalinkDriverLoader,DbxCommonDriver230.' +
+        'bpl'
+      
+        'DriverAssemblyLoader=Borland.Data.TDBXDynalinkDriverLoader,Borla' +
+        'nd.Data.DbxCommonDriver,Version=23.0.0.0,Culture=neutral,PublicK' +
+        'eyToken=91d62ebb5b0d1b1b'
+      
+        'MetaDataPackageLoader=TDBXFirebirdMetaDataCommandFactory,DbxFire' +
+        'birdDriver230.bpl'
+      
+        'MetaDataAssemblyLoader=Borland.Data.TDBXFirebirdMetaDataCommandF' +
+        'actory,Borland.Data.DbxFirebirdDriver,Version=23.0.0.0,Culture=n' +
+        'eutral,PublicKeyToken=91d62ebb5b0d1b1b'
+      'LibraryName=dbxfb.dll'
+      'LibraryNameOsx=libsqlfb.dylib'
+      'VendorLib=fbclient.dll'
+      'VendorLibWin64=fbclient.dll'
+      'VendorLibOsx=/Library/Frameworks/Firebird.framework/Firebird'
+      'Database=C:\Delphi_Projeto\ORGFIN\EXE\Dados\Dados.fdb'
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'Role=RoleName'
+      'MaxBlobSize=-1'
+      'LocaleCode=0000'
+      'IsolationLevel=ReadCommitted'
+      'SQLDialect=3'
+      'CommitRetain=False'
+      'WaitOnLocks=True'
+      'TrimChar=False'
+      'BlobSize=-1'
+      'ErrorResourceFile='
+      'RoleName=RoleName'
+      'ServerCharSet='
+      'Trim Char=False')
+    Connected = True
+    Left = 518
+    Top = 96
+  end
+  object SQLQuery1: TSQLQuery
+    Active = True
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'Select * from fi01ban order by cdban')
+    SQLConnection = SQLConnection1
+    Left = 518
+    Top = 136
+    object SQLQuery1CDBAN: TIntegerField
+      FieldName = 'CDBAN'
+      Required = True
+    end
+    object SQLQuery1NMBAN: TStringField
+      FieldName = 'NMBAN'
+      Size = 30
+    end
+    object SQLQuery1INATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object SQLQuery1DTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+  end
+  object ClientDataSet1: TClientDataSet
+    Active = True
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProvider1'
+    Left = 510
+    Top = 216
+    object ClientDataSet1CDBAN: TIntegerField
+      FieldName = 'CDBAN'
+      Required = True
+    end
+    object ClientDataSet1NMBAN: TStringField
+      FieldName = 'NMBAN'
+      Size = 30
+    end
+    object ClientDataSet1INATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object ClientDataSet1DTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+  end
+end

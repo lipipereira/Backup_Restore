@@ -1,0 +1,87 @@
+unit uInicial;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VclTee.TeeGDIPlus, Data.DB,
+  Datasnap.DBClient, Vcl.Grids, Vcl.DBGrids, VCLTee.TeEngine, Vcl.ExtCtrls,
+  VCLTee.TeeProcs, VCLTee.Chart, VCLTee.DBChart, Data.DBXFirebird, Data.FMTBcd,
+  Datasnap.Provider, Data.SqlExpr, VCLTee.Series, VCLTee.TeeDBCrossTab;
+
+type
+  TForm1 = class(TForm)
+    SQLConnection1: TSQLConnection;
+    SQLQuery1: TSQLQuery;
+    DataSetProvider1: TDataSetProvider;
+    DataSource1: TDataSource;
+    SQLQuery1JANEIRO: TFMTBCDField;
+    SQLQuery1FEVEREIRO: TFMTBCDField;
+    SQLQuery1MARCO: TFMTBCDField;
+    SQLQuery1ABRIL: TFMTBCDField;
+    SQLQuery1MAIO: TFMTBCDField;
+    SQLQuery1JUNHO: TFMTBCDField;
+    SQLQuery1JULHO: TFMTBCDField;
+    SQLQuery1AGOSTO: TFMTBCDField;
+    SQLQuery1SETEMBRO: TFMTBCDField;
+    SQLQuery1OUTUBRO: TFMTBCDField;
+    SQLQuery1NOVEMBRO: TFMTBCDField;
+    SQLQuery1DEZEMBRO: TFMTBCDField;
+    ClientDataSet1: TClientDataSet;
+    ClientDataSet1JANEIRO: TFMTBCDField;
+    ClientDataSet1FEVEREIRO: TFMTBCDField;
+    ClientDataSet1MARCO: TFMTBCDField;
+    ClientDataSet1ABRIL: TFMTBCDField;
+    ClientDataSet1MAIO: TFMTBCDField;
+    ClientDataSet1JUNHO: TFMTBCDField;
+    ClientDataSet1JULHO: TFMTBCDField;
+    ClientDataSet1AGOSTO: TFMTBCDField;
+    ClientDataSet1SETEMBRO: TFMTBCDField;
+    ClientDataSet1OUTUBRO: TFMTBCDField;
+    ClientDataSet1NOVEMBRO: TFMTBCDField;
+    ClientDataSet1DEZEMBRO: TFMTBCDField;
+    DBGrid1: TDBGrid;
+    Chart1: TChart;
+    Series1: TBarSeries;
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormShow(Sender: TObject);
+var
+  i: Integer;
+  val : Array[1..12] of Double;
+begin
+  val[1] := BcdToDouble(ClientDataSet1JANEIRO.Value) ;
+  val[2] := BcdToDouble( ClientDataSet1FEVEREIRO.Value);
+  val[3] := BcdToDouble(  ClientDataSet1MARCO.Value);
+  val[4] := BcdToDouble(  ClientDataSet1ABRIL.Value);
+  val[5] :=BcdToDouble(  ClientDataSet1MAIO.Value);
+  val[6] := BcdToDouble(  ClientDataSet1JUNHO.Value);
+  val[7] := BcdToDouble(  ClientDataSet1JULHO.Value);
+  val[8] := BcdToDouble(  ClientDataSet1AGOSTO.Value);
+  val[9] := BcdToDouble(   ClientDataSet1SETEMBRO.Value);
+  val[10] := BcdToDouble(   ClientDataSet1OUTUBRO.Value);
+  val[11] := BcdToDouble(   ClientDataSet1NOVEMBRO.Value);
+  val[12] := BcdToDouble(   ClientDataSet1DEZEMBRO.Value);
+
+  Series1.Clear;
+for i := 1 to 12 do
+begin
+
+Series1.Add(val[i],UpperCase(FormatSettings.LongMonthNames[i].Substring(0,3)) );
+
+end;
+end;
+
+end.

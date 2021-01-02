@@ -1,0 +1,196 @@
+unit uMsg;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.CheckLst, Data.DBXFirebird, Data.FMTBcd, Datasnap.DBClient, Data.DB,
+  Data.SqlExpr, Datasnap.Provider;
+
+
+type
+TMyButtons = (mbSim, mbNao, mbOk);
+
+type
+  TForm2 = class(TForm)
+    pnlIcones: TPanel;
+    pnlMensagem: TPanel;
+    pnlBotoes: TPanel;
+    txtMensagem: TLabel;
+    btnSim: TBitBtn;
+    btnNao: TBitBtn;
+    btnOk: TBitBtn;
+    CheckListBox1: TCheckListBox;
+    DataSource1: TDataSource;
+    DataSetProvider1: TDataSetProvider;
+    SQLConnection1: TSQLConnection;
+    SQLQuery1: TSQLQuery;
+    ClientDataSet1: TClientDataSet;
+    ListBox1: TListBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    SQLQuery1NMBAN: TStringField;
+    ClientDataSet1NMBAN: TStringField;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure CheckListBox1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+   class function Mensagem(Texto: String; Tipo: Char; Botoes: array of TMyButtons): Boolean;
+   procedure MultiSelect;
+  end;
+
+var
+  Form2: TForm2;
+  const
+    LEFTBUTTONS : array[0..2] of integer = (258, 178, 97);
+    TITULO :String = 'ClubeDelphi';
+
+implementation
+
+{$R *.dfm}
+
+uses uInicio;
+
+{ TForm2 }
+
+
+
+
+
+
+
+procedure TForm2.CheckListBox1Click(Sender: TObject);
+var i: Integer;
+begin
+
+end;
+
+procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
+var i: Integer;
+begin
+for i := 0 to CheckListBox1.Items.Count - 1 do begin
+  if CheckListBox1.Checked[i] then begin
+    te:=CheckListBox1.Items[CheckListBox1.ItemIndex];
+  end;
+
+end;
+end;
+
+
+
+
+procedure TForm2.MultiSelect;
+var
+  i: Integer;
+begin
+  with CheckListBox1 do
+  begin
+    if (Checked[ItemIndex]) then
+    begin
+      Items.BeginUpdate;
+      for i := 0 to Pred(Items.Count) do
+      begin
+        if (i <> ItemIndex) then
+          Checked[i] := False;
+      end;
+      Items.EndUpdate;
+    end;
+  end;
+end;
+
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+CheckListBox1.Clear; //Limpa a lista de items do clbItems
+
+   with ClientDataSet1 do
+
+   begin
+
+       Open; //Abre o cdsCustomer
+
+       First;
+
+       While not Eof do
+
+       begin
+         CheckListBox1.Items.Add(FieldByName('NMBAN').AsString); //Adiciona o valor do campo          Company
+
+         Next;
+
+       end;
+
+       Close; //Fecha o cdsCustomer
+
+    end;
+end;
+
+class function TForm2.Mensagem(Texto: String; Tipo: Char;
+  Botoes: array of TMyButtons): Boolean;
+var
+  i: Integer;
+  frm :TForm2;
+begin
+  frm := TForm2.Create(nil);
+  try
+    frm.txtMensagem.Caption := Texto;
+    frm.Caption := TITULO;
+
+    for i:=0 to Length(Botoes)-1 do
+    begin
+      case (Botoes[i]) of
+        mbOk: begin
+                frm.BtnOK.Visible := True;
+                frm.BtnOK.Left := LEFTBUTTONS[i];
+              end;
+
+        mbSim: begin
+                 frm.btnSim.Visible := True;
+                 frm.btnSim.Left := LEFTBUTTONS[i];
+               end;
+
+        mbNao: begin
+                 frm.BtnNao.Visible := True;
+                 frm.BtnNao.Left := LEFTBUTTONS[i];
+               end;
+
+        else begin
+          frm.BtnOK.Visible := True;
+          frm.BtnOK.Left := LEFTBUTTONS[i];
+        end;
+      end;
+    end;
+
+     case (Tipo) of
+      'I':
+      begin
+     //  frm.CheckBox1.Visible := True;
+      // frm.CheckBox2.Visible := True;
+
+      end;
+      //‘D‘: frm.imgDeletar.Visible := True;
+      //‘Q‘: frm.imgQuestao.Visible := True;
+      //‘C‘: frm.imgCuidado.Visible := True;
+      //‘E‘: frm.imgErro.Visible := True;
+      //else
+        //frm.imgInformacao.Visible := True;
+    end;
+
+     frm.ShowModal;
+
+    case (frm.ModalResult) of
+      mrOk, mrYes : result := True;
+      else
+        result := False;
+    end;
+
+  finally
+    if (frm<>nil) then
+      FreeAndNil(frm);
+  end;
+end;
+
+end.

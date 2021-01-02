@@ -1,0 +1,24 @@
+unit uLibrary;
+
+interface
+uses
+  System.SysUtils,Vcl.Forms, System.Classes, frxClass,IniFiles,System.UITypes,
+  Windows,Dialogs,Vcl.StdCtrls,System.Variants,Vcl.Mask,Vcl.Controls;
+
+  procedure CriarForm(T: TFormClass; F: TForm);
+
+
+implementation
+
+
+procedure CriarForm(T: TFormClass; F: TForm);
+begin
+  try
+    Application.CreateForm(T,F);
+    F.ShowModal;
+  finally
+    F.Free
+  end;
+end;
+
+end.

@@ -1,0 +1,15 @@
+program Backup_Restore;
+
+uses
+  Vcl.Forms,
+  uBackupRestore in '..\PAS\uBackupRestore.pas' {frmBackup},
+  uClasseBackup in '..\PAS\Classes\uClasseBackup.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmBackup, frmBackup);
+  Application.Run;
+end.

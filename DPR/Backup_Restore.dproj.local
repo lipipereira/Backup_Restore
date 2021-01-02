@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/12/15 09:16:22.000.600,=C:\Users\filip\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/12/15 09:20:29.000.025,C:\Users\filip\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Projeto_codigo\Delphi_Projeto\Bakup-Restore\PAS\uPricipal.pas</Transaction>
+    <Transaction>2020/12/15 09:20:29.000.025,C:\Users\filip\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Projeto_codigo\Delphi_Projeto\Bakup-Restore\PAS\uPricipal.dfm</Transaction>
+    <Transaction>2020/12/15 09:20:56.000.580,C:\Users\filip\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Projeto_codigo\Delphi_Projeto\Bakup-Restore\DPR\Backup_Restore.dproj</Transaction>
+    <Transaction>2020/12/15 09:21:50.000.099,=C:\Projeto_codigo\Delphi_Projeto\Bakup-Restore\PAS\uBackupRestore.pas</Transaction>
+    <Transaction>2020/12/15 09:22:05.000.089,C:\Projeto_codigo\Delphi_Projeto\Bakup-Restore\PAS\uPricipal.pas=</Transaction>
+    <Transaction>2021/01/02 09:12:06.000.149,=C:\Projeto_codigo\Delphi_Projeto\Bakup-Restore\PAS\Classes\uClasseBackup.pas</Transaction>
+    <Transaction>2021/01/02 09:20:15.000.113,=C:\Projeto_codigo\Delphi_Projeto\Bakup-Restore\PAS\Classes\uClasseException.pas</Transaction>
+  </Transactions>
+</BorlandProject>

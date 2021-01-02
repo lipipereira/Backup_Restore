@@ -1,0 +1,114 @@
+unit ulibry;
+
+interface
+uses
+  System.SysUtils,Vcl.Forms, System.Classes, frxClass,IniFiles,System.UITypes,
+  Windows,Dialogs,Vcl.StdCtrls,System.Variants,Vcl.Mask,Vcl.Controls;
+
+  procedure GeraRelatorio(const pReport: TfrxReport);
+  procedure CriarForm(T: TFormClass; F: TForm);
+  procedure ConectaFireBird(CaminhoIni: String);
+  procedure LimpaCampos();
+
+  procedure MostrarFormulario(Classe: TFormClass; Multi: Boolean);
+  procedure Fechar(Todas: Boolean);
+
+  function GetVersion(sFileName:string): string;
+  function  Ret_Numero(Key: Char; Texto: string; EhDecimal: Boolean = False): Char;
+
+implementation
+
+uses U_BANCO;
+
+
+procedure CriarForm(T: TFormClass; F: TForm);
+begin
+  try
+    Application.CreateForm(T,F);
+    F.ShowModal;
+  finally
+    F.Free
+  end;
+end;
+
+procedure ConectaFireBird(CaminhoIni: String);
+var ArquivoIni : TIniFile;
+    CaminhoBanco : String;
+begin
+   if FileExists(CaminhoIni + 'ORGFIN.ini') then begin
+      //Cria o arquivo Ini
+      ArquivoIni := TIniFile.Create(CaminhoIni + 'ORGFIN.ini');
+      //Pega o caminho do banco de dados informado no arquivo Ini
+      CaminhoBanco := ArquivoIni.ReadString('Banco','DATABASE',CaminhoBanco);
+      with DM do
+        try
+          Banco.Connected := False;
+          Banco.Params.Values['DataBase'] := CaminhoBanco;
+          Banco.Connected := True;
+         Except
+         Banco.Connected := False;
+         ShowMessage('Erro ao conectar no banco de dados, verifique o arquivo ORGFIN.ini');
+         Application.Terminate;
+      end;
+      ArquivoIni.Free;
+   end else
+   begin
+      ShowMessage('Não foi possível encontrar o arquivo ORGFIN.ini');
+   end;
+end;
+
+function GetVersion(sFileName: string): string;
+var
+  VerInfoSize  : DWORD;
+  VerInfo      : Pointer;
+  VerValueSize : DWORD;
+  VerValue     : PVSFixedFileInfo;
+  Dummy        : DWORD;
+begin
+  try
+    VerInfoSize := GetFileVersionInfoSize(PChar(sFileName), Dummy);
+    GetMem(VerInfo, VerInfoSize);
+    GetFileVersionInfo(PChar(sFileName), 0, VerInfoSize, VerInfo);
+    VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
+    with VerValue^ do
+    begin
+      Result := IntToStr(dwFileVersionMS shr 16);
+      Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF);
+      Result := Result + '.' + IntToStr(dwFileVersionLS shr 16);
+      Result := Result + '.' + IntToStr(dwFileVersionLS and $FFFF);
+    end;
+    FreeMem(VerInfo, VerInfoSize);
+  except //se ocorrer um erro retorna a versão 1.0.0.0, vai ocoorer um erro se o arquivo não tiver versão
+    Result:='1.0.0.0';
+ end;
+end;
+
+procedure LimpaCampos();
+var i:Integer;
+begin
+  with Screen.ActiveForm do begin
+    for i := 0 to ComponentCount -1 do begin
+      //Limpar Edtis
+      if Components[i] is TEdit then
+        TEdit(Components[i]).Clear;
+       //Limpar MaskEdtis
+      if Components[i] is TMaskEdit then
+        TMaskEdit(Components[i]).Clear;
+      // Limpa Memo
+      if Components[i] is TMemo then
+        TMemo(Components[i]).Clear;
+    end;
+  end;
+end;
+
+function  Ret_Numero(Key: Char; Texto: string; EhDecimal: Boolean = False): Char;
+begin
+  if not EhDecimal then begin
+    { Chr(8) = Back Space }
+    if not (CharInSet(Key,['0'..'9',#8])) then
+      Key := #0
+  end;
+  Result := Key;
+end;
+
+end.

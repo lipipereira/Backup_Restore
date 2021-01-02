@@ -1,0 +1,35 @@
+unit uLibrary;
+
+interface
+uses
+  System.SysUtils,Vcl.Forms, System.Classes, frxClass,IniFiles,System.UITypes,
+  Windows,Dialogs,Vcl.StdCtrls,System.Variants,Vcl.Mask,Vcl.Controls;
+
+  procedure GeraRelatorio(const pReport: TfrxReport);
+  procedure CriarForm(T: TFormClass; F: TForm);
+  procedure ConectaFireBird(CaminhoIni: String);
+  procedure LimpaCampos();
+
+  function GetVersion(sFileName:string): string;
+  function  Ret_Numero(Key: Char; Texto: string; EhDecimal: Boolean = False): Char;
+
+implementation
+
+
+procedure GeraRelatorio(const pReport: TfrxReport);
+begin
+  pReport.PrepareReport();
+  pReport.ShowPreparedReport;
+end;
+
+procedure CriarForm(T: TFormClass; F: TForm);
+begin
+  try
+    Application.CreateForm(T,F);
+    F.ShowModal;
+  finally
+    F.Free
+  end;
+end;
+
+end.

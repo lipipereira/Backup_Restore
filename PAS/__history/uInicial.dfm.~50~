@@ -1,0 +1,378 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 443
+  ClientWidth = 1184
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DBGrid1: TDBGrid
+    Left = 40
+    Top = 264
+    Width = 617
+    Height = 120
+    DataSource = DataSource1
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'JANEIRO'
+        Width = 64
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'FEVEREIRO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'MARCO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ABRIL'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'MAIO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'JUNHO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'JULHO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'AGOSTO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'SETEMBRO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'OUTUBRO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOVEMBRO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DEZEMBRO'
+        Visible = True
+      end>
+  end
+  object Chart1: TChart
+    Left = 0
+    Top = 0
+    Width = 1184
+    Height = 250
+    AllowPanning = pmNone
+    Legend.Symbol.Position = spRight
+    Legend.TextStyle = ltsRightValue
+    MarginTop = 3
+    MarginUnits = muPixels
+    Title.Text.Strings = (
+      '')
+    LeftAxis.Automatic = False
+    LeftAxis.AutomaticMinimum = False
+    LeftAxis.LabelsFormat.Brush.Color = clBlack
+    LeftAxis.LabelsMultiLine = True
+    LeftAxis.LabelsSeparation = 0
+    LeftAxis.LabelStyle = talValue
+    Panning.MouseWheel = pmwNone
+    View3D = False
+    Zoom.Brush.Color = clDefault
+    Zoom.Brush.Style = bsSolid
+    Zoom.MouseButton = mbMiddle
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 1
+    ExplicitTop = 8
+    DefaultCanvas = 'TGDIPlusCanvas'
+    PrintMargins = (
+      15
+      39
+      15
+      39)
+    ColorPaletteIndex = 13
+    object Series1: TBarSeries
+      BarBrush.Gradient.EndColor = 10708548
+      Marks.Style = smsValue
+      Marks.Arrow.Visible = False
+      Marks.Callout.Arrow.Visible = False
+      RoundSize = 38
+      BarRound = brNone
+      Gradient.EndColor = 10708548
+      Shadow.Visible = False
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Bar'
+      YValues.Order = loNone
+      Data = {
+        000600000000000000005886400000000000B484400000000000948640000000
+        0000FC87400000000000F48A400000000000E88740}
+      Detail = {0000000000}
+    end
+  end
+  object SQLConnection1: TSQLConnection
+    ConnectionName = 'Banco'
+    DriverName = 'Firebird'
+    LoginPrompt = False
+    Params.Strings = (
+      'DriverName=Firebird'
+      'DriverUnit=Data.DBXFirebird'
+      
+        'DriverPackageLoader=TDBXDynalinkDriverLoader,DbxCommonDriver230.' +
+        'bpl'
+      
+        'DriverAssemblyLoader=Borland.Data.TDBXDynalinkDriverLoader,Borla' +
+        'nd.Data.DbxCommonDriver,Version=23.0.0.0,Culture=neutral,PublicK' +
+        'eyToken=91d62ebb5b0d1b1b'
+      
+        'MetaDataPackageLoader=TDBXFirebirdMetaDataCommandFactory,DbxFire' +
+        'birdDriver230.bpl'
+      
+        'MetaDataAssemblyLoader=Borland.Data.TDBXFirebirdMetaDataCommandF' +
+        'actory,Borland.Data.DbxFirebirdDriver,Version=23.0.0.0,Culture=n' +
+        'eutral,PublicKeyToken=91d62ebb5b0d1b1b'
+      'LibraryName=dbxfb.dll'
+      'LibraryNameOsx=libsqlfb.dylib'
+      'VendorLib=fbclient.dll'
+      'VendorLibWin64=fbclient.dll'
+      'VendorLibOsx=/Library/Frameworks/Firebird.framework/Firebird'
+      'Database=C:\Delphi_Projeto\ORGFIN\EXE\Dados\Dados.fdb'
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'Role=RoleName'
+      'MaxBlobSize=-1'
+      'LocaleCode=0000'
+      'IsolationLevel=ReadCommitted'
+      'SQLDialect=3'
+      'CommitRetain=False'
+      'WaitOnLocks=True'
+      'TrimChar=False'
+      'BlobSize=-1'
+      'ErrorResourceFile='
+      'RoleName=RoleName'
+      'ServerCharSet='
+      'Trim Char=False')
+    Connected = True
+    Left = 160
+    Top = 408
+  end
+  object SQLQuery1: TSQLQuery
+    Active = True
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 1 then VALOR else' +
+        ' 0 end) as JANEIRO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 2 then VALOR else' +
+        ' 0 end) as FEVEREIRO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 3 then VALOR else' +
+        ' 0 end) as MARCO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 4 then VALOR else' +
+        ' 0 end) as ABRIL,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 5 then VALOR else' +
+        ' 0 end) as MAIO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 6 then VALOR else' +
+        ' 0 end) as JUNHO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 7 then VALOR else' +
+        ' 0 end) as JULHO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 8 then VALOR else' +
+        ' 0 end) as AGOSTO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 9 then VALOR else' +
+        ' 0 end) as SETEMBRO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 10 then VALOR els' +
+        'e 0 end) as OUTUBRO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 11 then VALOR els' +
+        'e 0 end) as NOVEMBRO,'
+      
+        '-sum(CASE when extract(month from mov.dtope) = 12 then VALOR els' +
+        'e 0 end) as DEZEMBRO'
+      'from fi01mov mov'
+      'inner join fi01con con on con.cdcon = mov.cdcon'
+      'where con.tpcon = '#39'D'#39)
+    SQLConnection = SQLConnection1
+    Left = 120
+    Top = 400
+    object SQLQuery1JANEIRO: TFMTBCDField
+      FieldName = 'JANEIRO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1FEVEREIRO: TFMTBCDField
+      FieldName = 'FEVEREIRO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1MARCO: TFMTBCDField
+      FieldName = 'MARCO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1ABRIL: TFMTBCDField
+      FieldName = 'ABRIL'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1MAIO: TFMTBCDField
+      FieldName = 'MAIO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1JUNHO: TFMTBCDField
+      FieldName = 'JUNHO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1JULHO: TFMTBCDField
+      FieldName = 'JULHO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1AGOSTO: TFMTBCDField
+      FieldName = 'AGOSTO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1SETEMBRO: TFMTBCDField
+      FieldName = 'SETEMBRO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1OUTUBRO: TFMTBCDField
+      FieldName = 'OUTUBRO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1NOVEMBRO: TFMTBCDField
+      FieldName = 'NOVEMBRO'
+      Precision = 18
+      Size = 6
+    end
+    object SQLQuery1DEZEMBRO: TFMTBCDField
+      FieldName = 'DEZEMBRO'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object DataSetProvider1: TDataSetProvider
+    DataSet = SQLQuery1
+    Left = 88
+    Top = 400
+  end
+  object DataSource1: TDataSource
+    DataSet = ClientDataSet1
+    Left = 16
+    Top = 400
+  end
+  object ClientDataSet1: TClientDataSet
+    Active = True
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProvider1'
+    Left = 56
+    Top = 400
+    object ClientDataSet1JANEIRO: TFMTBCDField
+      FieldName = 'JANEIRO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1FEVEREIRO: TFMTBCDField
+      FieldName = 'FEVEREIRO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1MARCO: TFMTBCDField
+      FieldName = 'MARCO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1ABRIL: TFMTBCDField
+      FieldName = 'ABRIL'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1MAIO: TFMTBCDField
+      FieldName = 'MAIO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1JUNHO: TFMTBCDField
+      FieldName = 'JUNHO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1JULHO: TFMTBCDField
+      FieldName = 'JULHO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1AGOSTO: TFMTBCDField
+      FieldName = 'AGOSTO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1SETEMBRO: TFMTBCDField
+      FieldName = 'SETEMBRO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1OUTUBRO: TFMTBCDField
+      FieldName = 'OUTUBRO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1NOVEMBRO: TFMTBCDField
+      FieldName = 'NOVEMBRO'
+      Precision = 18
+      Size = 6
+    end
+    object ClientDataSet1DEZEMBRO: TFMTBCDField
+      FieldName = 'DEZEMBRO'
+      Precision = 18
+      Size = 6
+    end
+  end
+end

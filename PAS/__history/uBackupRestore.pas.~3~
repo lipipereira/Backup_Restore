@@ -1,0 +1,182 @@
+unit uBackupRestore;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, IBX.IBServices, Vcl.ComCtrls,
+  Vcl.StdCtrls, Vcl.Buttons,Vcl.FileCtrl, Vcl.ExtCtrls;
+
+type
+  TfrmBackup = class(TForm)
+    pgControle: TPageControl;
+    tsBackup: TTabSheet;
+    tsRestore: TTabSheet;
+    RestoreBanco: TIBRestoreService;
+    BackupBanco: TIBBackupService;
+    opDiretorio: TOpenDialog;
+    Label1: TLabel;
+    edtDirBanco: TEdit;
+    btnDirBanco: TBitBtn;
+    Label2: TLabel;
+    edtDirBackup: TEdit;
+    Label3: TLabel;
+    edtNomeBanco: TEdit;
+    btnBackup: TBitBtn;
+    btnDirBackup: TBitBtn;
+    Label4: TLabel;
+    mmProgessoBackup: TMemo;
+    mmProgressoRestore: TMemo;
+    Label5: TLabel;
+    Label6: TLabel;
+    edtDirBacRestore: TEdit;
+    edtDirRestore: TEdit;
+    btnDirBacRestore: TBitBtn;
+    btnDirRestore: TBitBtn;
+    btnRestore: TBitBtn;
+    Panel1: TPanel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    txtDataRestore: TLabel;
+    txtHoraRestore: TLabel;
+
+    procedure btnDirBancoClick(Sender: TObject);
+    procedure btnBackupClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnDirBackupClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure btnDirBacRestoreClick(Sender: TObject);
+    procedure btnDirRestoreClick(Sender: TObject);
+    procedure btnRestoreClick(Sender: TObject);
+  private
+    { Private declarations }
+    function SelectDir(Title : string) : string;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmBackup: TfrmBackup;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmBackup.btnBackupClick(Sender: TObject);
+begin
+  if edtDirBanco.Text = EmptyStr then begin
+    ShowMessage('Arquivo de Backup não informado. Por favor informe o aqruivo!!!');
+  end else begin
+    try
+      Screen.Cursor:=crHourGlass;// muda o cursos do mouse
+      with BackupBanco do // inicia o backup
+      begin
+        Attach;
+        LoginPrompt:=False;
+        DatabaseName:= edtDirBanco.Text;
+        BackupFile.Add(edtDirBackup.Text);
+        Active:=True;
+        Verbose:=True;
+        ServiceStart;
+        while not Eof do begin
+          mmProgessoBackup.Lines.Add(GetNextLine)// mostra o andamento no memo1.text
+        end;
+        Active:=False;
+      end;
+    finally
+      Screen.Cursor:=crDefault;
+      ShowMessage('BackUp efetuado com sucesso!!!'); // infomra se o processo ocorreu com sucesso
+    end;
+    Application.ProcessMessages;
+  end;
+
+end;
+
+procedure TfrmBackup.btnDirBackupClick(Sender: TObject);
+begin
+ edtDirBackup.Text:=SelectDir('Selecione a pasta de Instalação')+edtNomeBanco.Text;
+end;
+
+procedure TfrmBackup.btnDirBacRestoreClick(Sender: TObject);
+begin
+  opDiretorio.InitialDir:=ExtractFilePath(Application.ExeName + 'Backup\');
+  if opDiretorio.Execute then begin
+    edtDirBacRestore.Text:=opDiretorio.FileName;
+  end;
+  edtDirRestore.Text:= ExtractFilePath(ParamStr(0))+'Dados\Dados.fdb';
+  btnDirRestore.Enabled:=True;
+  btnRestore.Enabled:=True;
+end;
+
+procedure TfrmBackup.btnDirBancoClick(Sender: TObject);
+begin
+ opDiretorio.InitialDir:=ExtractFilePath(Application.ExeName + 'Dados\');
+  if opDiretorio.Execute then begin
+    edtDirBanco.Text:=opDiretorio.FileName;
+    edtNomeBanco.Text:= 'Backup'+FormatDateTime('ddmmyy',date)+'.fbk';
+    btnDirBackup.Enabled:=True;
+    edtDirBackup.Text:=ExtractFilePath(Application.ExeName)+'Backup\'+edtNomeBanco.Text;
+  end;
+end;
+
+procedure TfrmBackup.btnDirRestoreClick(Sender: TObject);
+begin
+  opDiretorio.InitialDir:=ExtractFilePath(Application.ExeName);
+  edtDirRestore.Text:=SelectDir('Selecione a pasta de Instalação')+'\Dados.fdb';
+end;
+
+procedure TfrmBackup.btnRestoreClick(Sender: TObject);
+begin
+  try
+    Screen.Cursor:=crHourGlass;
+    with RestoreBanco do
+    begin
+      Attach;
+      Options := [Replace];
+      BackupFile.Add(edtDirBacRestore.Text);
+      DatabaseName.Add(edtDirRestore.Text);
+      Verbose:=True;
+      Active:=True;
+      ServiceStart;
+      while not Eof do begin
+        mmProgressoRestore.Lines.Add(GetNextLine)
+      end;
+      Active:=False;
+    end;
+  finally
+    ShowMessage('Restauração efetuado com sucesso');
+    Screen.Cursor:=crDefault;
+  end;
+  Application.ProcessMessages;
+end;
+
+procedure TfrmBackup.FormCreate(Sender: TObject);
+begin
+  if not DirectoryExists(ExtractFilePath(Application.ExeName)+ 'Backup') then begin
+    CreateDir(ExtractFilePath(Application.ExeName)+'Backup');
+  end;
+
+end;
+
+procedure TfrmBackup.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = VK_ESCAPE then begin
+    Close;
+  end;
+
+end;
+
+function TfrmBackup.SelectDir(Title: string): string;
+var
+  Pasta : String;
+begin
+  SelectDirectory(Title, '', Pasta);
+  if (Trim(Pasta) <> '') then
+    if (Pasta[Length(Pasta)] <> '\') then
+      Pasta := Pasta + '\';
+  Result := Pasta;
+end;
+
+end.

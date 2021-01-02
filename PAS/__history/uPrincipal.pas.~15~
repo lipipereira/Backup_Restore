@@ -1,0 +1,58 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus,TDI, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TForm1 = class(TForm)
+    MainMenu1: TMainMenu;
+    este1: TMenuItem;
+    este11: TMenuItem;
+    BitBtn1: TBitBtn;
+    este21: TMenuItem;
+    procedure FormCreate(Sender: TObject);
+    procedure este11Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure este21Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  FDI:TTDI;
+
+implementation
+
+{$R *.dfm}
+
+uses uPadrao, uPagina2;
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+begin
+FDI.Fechar(False);
+end;
+
+procedure TForm1.este11Click(Sender: TObject);
+begin
+FDI.MostrarFormulario(TfrmPag2,False);
+end;
+
+procedure TForm1.este21Click(Sender: TObject);
+begin
+FDI.MostrarFormulario(Tfrm);
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+        FDI := TTDI.Create(Self,TfrmPadrao);
+        FDI.MostrarMenuPopup := True
+
+end;
+
+end.

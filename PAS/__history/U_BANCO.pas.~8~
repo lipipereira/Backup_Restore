@@ -1,0 +1,171 @@
+unit U_BANCO;
+
+interface
+
+uses
+  SysUtils, Classes, FMTBcd, SimpleDS, DBClient, Provider, DB,
+  SqlExpr, Data.DBXFirebird, Vcl.Menus;
+
+type
+  TDM = class(TDataModule)
+    sdsUsu: TSQLDataSet;
+    dsUsu: TDataSource;
+    dspUsu: TDataSetProvider;
+    sdsUsuCDUSU: TIntegerField;
+    sdsUsuNMUSU: TStringField;
+    sdsUsuSENHA: TStringField;
+    sdsUsuDTOPE: TDateField;
+    cdsUsu: TClientDataSet;
+    cdsUsuNMUSU: TStringField;
+    cdsUsuSENHA: TStringField;
+    cdsUsuDTOPE: TDateField;
+    sdsLogin: TSimpleDataSet;
+    sdsLoginCDUSU: TIntegerField;
+    sdsLoginNMUSU: TStringField;
+    sdsLoginSENHA: TStringField;
+    sdsLoginDTOPE: TDateField;
+    sdsContUsu: TSimpleDataSet;
+    dsContUsu: TDataSource;
+    Banco: TSQLConnection;
+    testeBanco: TSQLConnection;
+    sdsContUsuCOUNT: TLargeintField;
+    cdsUsuCDUSU: TIntegerField;
+    sdsUtiResUsu: TSimpleDataSet;
+    sdsUtiResUsuMAX: TIntegerField;
+    sdsUsuINATIVO: TStringField;
+    cdsUsuINATIVO: TStringField;
+    dsGru: TDataSource;
+    cdsGru: TClientDataSet;
+    dspGru: TDataSetProvider;
+    cdsGruCDGRU: TIntegerField;
+    cdsGruNMGRU: TStringField;
+    cdsGruDTOPE: TDateField;
+    cdsGruINATIVO: TStringField;
+    dsEmp: TDataSource;
+    cdsEmp: TClientDataSet;
+    dspEmp: TDataSetProvider;
+    sdsEmp: TSQLDataSet;
+    sdsEmpCDEMPRE: TIntegerField;
+    sdsEmpNMEMPRE: TStringField;
+    sdsEmpDTOPE: TDateField;
+    sdsEmpDTPAG: TDateField;
+    sdsEmpPAGO: TStringField;
+    sdsEmpHIST: TBlobField;
+    cdsEmpCDEMPRE: TIntegerField;
+    cdsEmpNMEMPRE: TStringField;
+    cdsEmpDTOPE: TDateField;
+    cdsEmpDTPAG: TDateField;
+    cdsEmpPAGO: TStringField;
+    cdsEmpHIST: TBlobField;
+    sdsContGru: TSimpleDataSet;
+    LargeintField1: TLargeintField;
+    dsContGru: TDataSource;
+    sdsUtiResGru: TSimpleDataSet;
+    sdsUtiResGruMAX: TIntegerField;
+    cdsBan: TClientDataSet;
+    dspBan: TDataSetProvider;
+    sqlGru: TSQLQuery;
+    sqlGruCDGRU: TIntegerField;
+    sqlGruNMGRU: TStringField;
+    sqlGruDTOPE: TDateField;
+    sqlGruINATIVO: TStringField;
+    sqlBan: TSQLQuery;
+    sqlSaldoCasa: TSQLQuery;
+    sqlSaldoCaixa: TSQLQuery;
+    dsSaldoCaixa: TDataSource;
+    dsSaldoCasa: TDataSource;
+    sqlSaldoReal: TSQLQuery;
+    dsSaldoReal: TDataSource;
+    sqlSaldoCaixaSALDOCX: TFMTBCDField;
+    sqlSaldoCasaSALDOCS: TFMTBCDField;
+    sqlSaldoRealSALDOGERAL: TFMTBCDField;
+    sqlInsert: TSQLQuery;
+    sqlBanCDBAN: TIntegerField;
+    sqlBanNMBAN: TStringField;
+    sqlBanINATIVO: TStringField;
+    sqlBanDTOPE: TDateField;
+    cdsBanCDBAN: TIntegerField;
+    cdsBanNMBAN: TStringField;
+    cdsBanINATIVO: TStringField;
+    cdsBanDTOPE: TDateField;
+    dsConta: TDataSource;
+    cdsConta: TClientDataSet;
+    dspConta: TDataSetProvider;
+    sqlConta: TSQLQuery;
+    cdsContaCDCON: TIntegerField;
+    cdsContaNMCON: TStringField;
+    cdsContaDESCRI: TBlobField;
+    cdsContaDTOPE: TDateField;
+    cdsContaINATIVO: TStringField;
+    cdsContaVLMAX: TFMTBCDField;
+    cdsContaCDGRU: TIntegerField;
+    cdsContaTPCON: TStringField;
+    sqlContaCDCON: TIntegerField;
+    sqlContaNMCON: TStringField;
+    sqlContaDESCRI: TBlobField;
+    sqlContaDTOPE: TDateField;
+    sqlContaINATIVO: TStringField;
+    sqlContaVLMAX: TFMTBCDField;
+    sqlContaCDGRU: TIntegerField;
+    sqlContaTPCON: TStringField;
+    sdsRecDes: TSimpleDataSet;
+    sdsRecDesTPCON: TStringField;
+    dsBan: TDataSource;
+    dsMov: TDataSource;
+    cdsMov: TClientDataSet;
+    dspMov: TDataSetProvider;
+    sqlMov: TSQLQuery;
+    cdsMovCDMOV: TIntegerField;
+    cdsMovVALOR: TFMTBCDField;
+    cdsMovDTOPE: TDateField;
+    cdsMovDESCRI: TBlobField;
+    cdsMovCDBAN: TIntegerField;
+    cdsMovNMMOV: TStringField;
+    cdsMovCDCON: TIntegerField;
+    sqlMovCDMOV: TIntegerField;
+    sqlMovVALOR: TFMTBCDField;
+    sqlMovDTOPE: TDateField;
+    sqlMovDESCRI: TBlobField;
+    sqlMovCDBAN: TIntegerField;
+    sqlMovNMMOV: TStringField;
+    sqlMovCDCON: TIntegerField;
+    sqlUpdate: TSQLQuery;
+    dsDiv: TDataSource;
+    cdsDiv: TClientDataSet;
+    dspDiv: TDataSetProvider;
+    sqlDiv: TSQLQuery;
+    sdsUtilResBan: TSimpleDataSet;
+    sdsUtilResBanMAX: TIntegerField;
+    cdsDivVALOR: TFMTBCDField;
+    cdsDivPARCELA: TIntegerField;
+    sqlDivCDDIV: TIntegerField;
+    sqlDivCDCON: TIntegerField;
+    sqlDivDTOPE: TDateField;
+    sqlDivDTVEN: TDateField;
+    sqlDivVALOR: TFMTBCDField;
+    sqlDivSTATUS: TStringField;
+    sqlDivPARCELA: TIntegerField;
+    procedure cdsDivAfterPost(DataSet: TDataSet);
+  private            
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DM: TDM;
+
+implementation
+
+
+{$R *.dfm}
+
+{ TDM }
+
+
+procedure TDM.cdsDivAfterPost(DataSet: TDataSet);
+begin
+  DM.cdsDiv.ApplyUpdates(0);
+end;
+
+end.

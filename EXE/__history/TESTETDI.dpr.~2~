@@ -1,0 +1,15 @@
+program TESTETDI;
+
+uses
+  Vcl.Forms,
+  uPrincipal in '..\PAS\uPrincipal.pas' {Form1},
+  TDI in '..\PAS\TDI.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

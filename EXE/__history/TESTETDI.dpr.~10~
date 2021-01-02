@@ -1,0 +1,22 @@
+program TESTETDI;
+
+uses
+  Vcl.Forms,
+  uPrincipal in '..\PAS\uPrincipal.pas' {Form1},
+  TDI in '..\PAS\TDI.pas',
+  uPadrao in '..\PAS\uPadrao.pas' {frmPadrao},
+  uPagina2 in '..\PAS\uPagina2.pas' {frmPag2},
+  uPagina3 in '..\PAS\uPagina3.pas' {frmPag3},
+  uLibrary in '..\PAS\uLibrary.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfrmPadrao, frmPadrao);
+  Application.CreateForm(TfrmPag2, frmPag2);
+  Application.CreateForm(TfrmPag3, frmPag3);
+  Application.Run;
+end.

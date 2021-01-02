@@ -1,0 +1,814 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 503
+  Width = 996
+  object sdsUsu: TSQLDataSet
+    CommandText = 'select * from FIUSU'
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Banco
+    Left = 128
+    object sdsUsuCDUSU: TIntegerField
+      FieldName = 'CDUSU'
+      Required = True
+    end
+    object sdsUsuNMUSU: TStringField
+      FieldName = 'NMUSU'
+      Size = 25
+    end
+    object sdsUsuSENHA: TStringField
+      FieldName = 'SENHA'
+      Size = 25
+    end
+    object sdsUsuDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object sdsUsuINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dsUsu: TDataSource
+    DataSet = cdsUsu
+    Left = 11
+  end
+  object dspUsu: TDataSetProvider
+    DataSet = sdsUsu
+    Left = 90
+  end
+  object cdsUsu: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspUsu'
+    Left = 51
+    object cdsUsuCDUSU: TIntegerField
+      FieldName = 'CDUSU'
+      Required = True
+    end
+    object cdsUsuNMUSU: TStringField
+      FieldName = 'NMUSU'
+      Size = 25
+    end
+    object cdsUsuSENHA: TStringField
+      FieldName = 'SENHA'
+      Size = 25
+    end
+    object cdsUsuDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object cdsUsuINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object sdsLogin: TSimpleDataSet
+    Aggregates = <>
+    Connection = Banco
+    DataSet.CommandText = 'select * from fiusu'#13#10'where nmusu= :nome and senha= :senha'
+    DataSet.MaxBlobSize = -1
+    DataSet.Params = <
+      item
+        DataType = ftString
+        Name = 'nome'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftString
+        Name = 'senha'
+        ParamType = ptInput
+      end>
+    Params = <>
+    Left = 424
+    Top = 376
+    object sdsLoginCDUSU: TIntegerField
+      FieldName = 'CDUSU'
+      Required = True
+    end
+    object sdsLoginNMUSU: TStringField
+      FieldName = 'NMUSU'
+      Size = 25
+    end
+    object sdsLoginSENHA: TStringField
+      FieldName = 'SENHA'
+      Size = 25
+    end
+    object sdsLoginDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+  end
+  object sdsContUsu: TSimpleDataSet
+    Aggregates = <>
+    Connection = Banco
+    DataSet.CommandText = 'select count(*) from fiusu'
+    DataSet.MaxBlobSize = -1
+    DataSet.Params = <>
+    Params = <>
+    Left = 557
+    Top = 384
+    object sdsContUsuCOUNT: TLargeintField
+      FieldName = 'COUNT'
+      Required = True
+    end
+  end
+  object dsContUsu: TDataSource
+    DataSet = sdsContUsu
+    Left = 588
+    Top = 383
+  end
+  object Banco: TSQLConnection
+    ConnectionName = 'Banco'
+    DriverName = 'Firebird'
+    KeepConnection = False
+    LoginPrompt = False
+    Params.Strings = (
+      'DriverName=Firebird'
+      'DriverUnit=Data.DBXFirebird'
+      
+        'DriverPackageLoader=TDBXDynalinkDriverLoader,DbxCommonDriver230.' +
+        'bpl'
+      
+        'DriverAssemblyLoader=Borland.Data.TDBXDynalinkDriverLoader,Borla' +
+        'nd.Data.DbxCommonDriver,Version=23.0.0.0,Culture=neutral,PublicK' +
+        'eyToken=91d62ebb5b0d1b1b'
+      
+        'MetaDataPackageLoader=TDBXFirebirdMetaDataCommandFactory,DbxFire' +
+        'birdDriver230.bpl'
+      
+        'MetaDataAssemblyLoader=Borland.Data.TDBXFirebirdMetaDataCommandF' +
+        'actory,Borland.Data.DbxFirebirdDriver,Version=23.0.0.0,Culture=n' +
+        'eutral,PublicKeyToken=91d62ebb5b0d1b1b'
+      'LibraryName=dbxfb.dll'
+      'LibraryNameOsx=libsqlfb.dylib'
+      'VendorLib=fbclient.dll'
+      'VendorLibWin64=fbclient.dll'
+      'VendorLibOsx=/Library/Frameworks/Firebird.framework/Firebird'
+      'Database='
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'Role=RoleName'
+      'MaxBlobSize=-1'
+      'LocaleCode=0000'
+      'IsolationLevel=ReadCommitted'
+      'SQLDialect=3'
+      'CommitRetain=False'
+      'WaitOnLocks=True'
+      'TrimChar=False'
+      'BlobSize=-1'
+      'ErrorResourceFile='
+      'RoleName=RoleName'
+      'ServerCharSet='
+      'Trim Char=False')
+    Left = 336
+    Top = 8
+  end
+  object testeBanco: TSQLConnection
+    ConnectionName = 'Banco'
+    DriverName = 'Firebird'
+    KeepConnection = False
+    LoginPrompt = False
+    Params.Strings = (
+      'DriverName=Firebird'
+      'DriverUnit=Data.DBXFirebird'
+      
+        'DriverPackageLoader=TDBXDynalinkDriverLoader,DbxCommonDriver230.' +
+        'bpl'
+      
+        'DriverAssemblyLoader=Borland.Data.TDBXDynalinkDriverLoader,Borla' +
+        'nd.Data.DbxCommonDriver,Version=23.0.0.0,Culture=neutral,PublicK' +
+        'eyToken=91d62ebb5b0d1b1b'
+      
+        'MetaDataPackageLoader=TDBXFirebirdMetaDataCommandFactory,DbxFire' +
+        'birdDriver230.bpl'
+      
+        'MetaDataAssemblyLoader=Borland.Data.TDBXFirebirdMetaDataCommandF' +
+        'actory,Borland.Data.DbxFirebirdDriver,Version=23.0.0.0,Culture=n' +
+        'eutral,PublicKeyToken=91d62ebb5b0d1b1b'
+      'LibraryName=dbxfb.dll'
+      'LibraryNameOsx=libsqlfb.dylib'
+      'VendorLib=fbclient.dll'
+      'VendorLibWin64=fbclient.dll'
+      'VendorLibOsx=/Library/Frameworks/Firebird.framework/Firebird'
+      'Database=C:\Delphi_Projeto\ORGFIN\EXE\Dados\Dados.fdb'
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'Role=RoleName'
+      'MaxBlobSize=-1'
+      'LocaleCode=0000'
+      'IsolationLevel=ReadCommitted'
+      'SQLDialect=3'
+      'CommitRetain=False'
+      'WaitOnLocks=True'
+      'TrimChar=False'
+      'BlobSize=-1'
+      'ErrorResourceFile='
+      'RoleName=RoleName'
+      'ServerCharSet='
+      'Trim Char=False')
+    Connected = True
+    Left = 384
+    Top = 8
+  end
+  object sdsUtiResUsu: TSimpleDataSet
+    Aggregates = <>
+    Connection = Banco
+    DataSet.CommandText = 'select max(cdusu) from fiusu'
+    DataSet.MaxBlobSize = -1
+    DataSet.Params = <>
+    Params = <>
+    Left = 504
+    Top = 376
+    object sdsUtiResUsuMAX: TIntegerField
+      FieldName = 'MAX'
+    end
+  end
+  object dsGru: TDataSource
+    DataSet = cdsGru
+    Left = 11
+    Top = 47
+  end
+  object cdsGru: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspGru'
+    Left = 48
+    Top = 47
+    object cdsGruCDGRU: TIntegerField
+      FieldName = 'CDGRU'
+      Required = True
+    end
+    object cdsGruNMGRU: TStringField
+      FieldName = 'NMGRU'
+      Size = 30
+    end
+    object cdsGruDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object cdsGruINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dspGru: TDataSetProvider
+    DataSet = sqlGru
+    Left = 88
+    Top = 47
+  end
+  object dsEmp: TDataSource
+    DataSet = cdsEmp
+    Left = 11
+    Top = 92
+  end
+  object cdsEmp: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspEmp'
+    Left = 48
+    Top = 92
+    object cdsEmpCDEMPRE: TIntegerField
+      FieldName = 'CDEMPRE'
+      Required = True
+    end
+    object cdsEmpNMEMPRE: TStringField
+      FieldName = 'NMEMPRE'
+      Size = 25
+    end
+    object cdsEmpDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object cdsEmpDTPAG: TDateField
+      FieldName = 'DTPAG'
+    end
+    object cdsEmpPAGO: TStringField
+      FieldName = 'PAGO'
+      FixedChar = True
+      Size = 2
+    end
+    object cdsEmpHIST: TBlobField
+      FieldName = 'HIST'
+      Size = 1
+    end
+  end
+  object dspEmp: TDataSetProvider
+    DataSet = sdsEmp
+    Left = 88
+    Top = 92
+  end
+  object sdsEmp: TSQLDataSet
+    MaxBlobSize = 1
+    Params = <>
+    SQLConnection = Banco
+    Left = 128
+    Top = 92
+    object sdsEmpCDEMPRE: TIntegerField
+      FieldName = 'CDEMPRE'
+      Required = True
+    end
+    object sdsEmpNMEMPRE: TStringField
+      FieldName = 'NMEMPRE'
+      Size = 25
+    end
+    object sdsEmpDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object sdsEmpDTPAG: TDateField
+      FieldName = 'DTPAG'
+    end
+    object sdsEmpPAGO: TStringField
+      FieldName = 'PAGO'
+      FixedChar = True
+      Size = 2
+    end
+    object sdsEmpHIST: TBlobField
+      FieldName = 'HIST'
+      Size = 1
+    end
+  end
+  object sdsContGru: TSimpleDataSet
+    Aggregates = <>
+    Connection = Banco
+    DataSet.CommandText = 'select count(*) from FI01GRU'
+    DataSet.MaxBlobSize = -1
+    DataSet.Params = <>
+    Params = <>
+    Left = 629
+    Top = 384
+    object LargeintField1: TLargeintField
+      FieldName = 'COUNT'
+      Required = True
+    end
+  end
+  object dsContGru: TDataSource
+    DataSet = sdsContGru
+    Left = 676
+    Top = 388
+  end
+  object sdsUtiResGru: TSimpleDataSet
+    Aggregates = <>
+    Connection = Banco
+    DataSet.CommandText = 'select max(cdgru)  from FI01GRU'
+    DataSet.MaxBlobSize = -1
+    DataSet.Params = <>
+    Params = <>
+    Left = 504
+    Top = 336
+    object sdsUtiResGruMAX: TIntegerField
+      FieldName = 'MAX'
+    end
+  end
+  object cdsBan: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspBan'
+    Left = 48
+    Top = 143
+    object cdsBanCDBAN: TIntegerField
+      FieldName = 'CDBAN'
+      Required = True
+    end
+    object cdsBanNMBAN: TStringField
+      FieldName = 'NMBAN'
+      Size = 30
+    end
+    object cdsBanINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsBanDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+  end
+  object dspBan: TDataSetProvider
+    DataSet = sqlBan
+    Left = 88
+    Top = 143
+  end
+  object sqlGru: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select * from fi01gru '
+      'where inativo = '#39'N'#39
+      'order by cdgru')
+    SQLConnection = Banco
+    Left = 128
+    Top = 48
+    object sqlGruCDGRU: TIntegerField
+      FieldName = 'CDGRU'
+      Required = True
+    end
+    object sqlGruNMGRU: TStringField
+      FieldName = 'NMGRU'
+      Size = 30
+    end
+    object sqlGruDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object sqlGruINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object sqlBan: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select * from fi01ban')
+    SQLConnection = Banco
+    Left = 128
+    Top = 144
+    object sqlBanCDBAN: TIntegerField
+      FieldName = 'CDBAN'
+      Required = True
+    end
+    object sqlBanNMBAN: TStringField
+      FieldName = 'NMBAN'
+      Size = 30
+    end
+    object sqlBanINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object sqlBanDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+  end
+  object sqlSaldoCasa: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select sum(mov.valor) as SaldoCs'
+      'from fi01mov as mov'
+      'inner join fi01ban as ban on ban.cdban = mov.cdban'
+      'where mov.cdban = 2')
+    SQLConnection = Banco
+    Left = 536
+    Top = 8
+    object sqlSaldoCasaSALDOCS: TFMTBCDField
+      FieldName = 'SALDOCS'
+      EditFormat = 'R$ ##,##0.00'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+  end
+  object sqlSaldoCaixa: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select sum(mov.valor) as SaldoCx'
+      'from fi01mov as mov'
+      'inner join fi01ban as ban on ban.cdban = mov.cdban'
+      'where mov.cdban = 1')
+    SQLConnection = Banco
+    Left = 576
+    Top = 8
+    object sqlSaldoCaixaSALDOCX: TFMTBCDField
+      FieldName = 'SALDOCX'
+      EditFormat = 'R$ ##,##0.00'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+  end
+  object dsSaldoCaixa: TDataSource
+    DataSet = sqlSaldoCaixa
+    Left = 584
+    Top = 72
+  end
+  object dsSaldoCasa: TDataSource
+    DataSet = sqlSaldoCasa
+    Left = 544
+    Top = 64
+  end
+  object sqlSaldoReal: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select sum(valor) as SaldoGeral'
+      'from fi01mov')
+    SQLConnection = Banco
+    Left = 496
+    Top = 8
+    object sqlSaldoRealSALDOGERAL: TFMTBCDField
+      FieldName = 'SALDOGERAL'
+      EditFormat = 'R$ ##,##0.00'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+  end
+  object dsSaldoReal: TDataSource
+    DataSet = sqlSaldoReal
+    Left = 488
+    Top = 64
+  end
+  object sqlInsert: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Banco
+    Left = 728
+    Top = 16
+  end
+  object dsConta: TDataSource
+    DataSet = cdsConta
+    Left = 11
+    Top = 191
+  end
+  object cdsConta: TClientDataSet
+    Active = True
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspConta'
+    Left = 48
+    Top = 191
+    object cdsContaCDCON: TIntegerField
+      FieldName = 'CDCON'
+      Required = True
+    end
+    object cdsContaNMCON: TStringField
+      FieldName = 'NMCON'
+      Size = 40
+    end
+    object cdsContaDESCRI: TBlobField
+      FieldName = 'DESCRI'
+      Size = 1
+    end
+    object cdsContaDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object cdsContaINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsContaVLMAX: TFMTBCDField
+      FieldName = 'VLMAX'
+      Precision = 18
+      Size = 2
+    end
+    object cdsContaCDGRU: TIntegerField
+      FieldName = 'CDGRU'
+    end
+    object cdsContaTPCON: TStringField
+      FieldName = 'TPCON'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dspConta: TDataSetProvider
+    DataSet = sqlConta
+    Left = 88
+    Top = 191
+  end
+  object sqlConta: TSQLQuery
+    Active = True
+    MaxBlobSize = 1
+    Params = <>
+    SQL.Strings = (
+      'select * from fi01con')
+    SQLConnection = testeBanco
+    Left = 128
+    Top = 192
+    object sqlContaCDCON: TIntegerField
+      FieldName = 'CDCON'
+      Required = True
+    end
+    object sqlContaNMCON: TStringField
+      FieldName = 'NMCON'
+      Size = 40
+    end
+    object sqlContaDESCRI: TBlobField
+      FieldName = 'DESCRI'
+      Size = 1
+    end
+    object sqlContaDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object sqlContaINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object sqlContaVLMAX: TFMTBCDField
+      FieldName = 'VLMAX'
+      Precision = 18
+      Size = 2
+    end
+    object sqlContaCDGRU: TIntegerField
+      FieldName = 'CDGRU'
+    end
+    object sqlContaTPCON: TStringField
+      FieldName = 'TPCON'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object sdsRecDes: TSimpleDataSet
+    Aggregates = <>
+    Connection = Banco
+    DataSet.CommandText = 'select con.tpcon'#13#10'from fi01con con'#13#10'where con.cdcon = :CDCON'
+    DataSet.MaxBlobSize = -1
+    DataSet.Params = <
+      item
+        DataType = ftInteger
+        Name = 'CDCON'
+        ParamType = ptInput
+      end>
+    Params = <>
+    Left = 728
+    Top = 80
+    object sdsRecDesTPCON: TStringField
+      FieldName = 'TPCON'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dsBan: TDataSource
+    DataSet = cdsBan
+    Left = 8
+    Top = 144
+  end
+  object dsMov: TDataSource
+    DataSet = cdsMov
+    Left = 11
+    Top = 239
+  end
+  object cdsMov: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspMov'
+    Left = 48
+    Top = 239
+    object cdsMovCDMOV: TIntegerField
+      FieldName = 'CDMOV'
+      Required = True
+    end
+    object cdsMovVALOR: TFMTBCDField
+      FieldName = 'VALOR'
+      Precision = 18
+      Size = 6
+    end
+    object cdsMovDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object cdsMovDESCRI: TBlobField
+      FieldName = 'DESCRI'
+      Size = 1
+    end
+    object cdsMovCDBAN: TIntegerField
+      FieldName = 'CDBAN'
+    end
+    object cdsMovNMMOV: TStringField
+      FieldName = 'NMMOV'
+      Size = 30
+    end
+    object cdsMovCDCON: TIntegerField
+      FieldName = 'CDCON'
+    end
+  end
+  object dspMov: TDataSetProvider
+    DataSet = sqlMov
+    Left = 88
+    Top = 239
+  end
+  object sqlMov: TSQLQuery
+    MaxBlobSize = 1
+    Params = <>
+    SQL.Strings = (
+      'select * from fi01mov')
+    SQLConnection = Banco
+    Left = 128
+    Top = 240
+    object sqlMovCDMOV: TIntegerField
+      FieldName = 'CDMOV'
+      Required = True
+    end
+    object sqlMovVALOR: TFMTBCDField
+      FieldName = 'VALOR'
+      Precision = 18
+      Size = 6
+    end
+    object sqlMovDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object sqlMovDESCRI: TBlobField
+      FieldName = 'DESCRI'
+      Size = 1
+    end
+    object sqlMovCDBAN: TIntegerField
+      FieldName = 'CDBAN'
+    end
+    object sqlMovNMMOV: TStringField
+      FieldName = 'NMMOV'
+      Size = 30
+    end
+    object sqlMovCDCON: TIntegerField
+      FieldName = 'CDCON'
+    end
+  end
+  object sqlUpdate: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Banco
+    Left = 680
+    Top = 16
+  end
+  object dsDiv: TDataSource
+    DataSet = cdsDiv
+    Left = 11
+    Top = 287
+  end
+  object cdsDiv: TClientDataSet
+    Active = True
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspDiv'
+    AfterPost = cdsDivAfterPost
+    Left = 48
+    Top = 287
+    object cdsDivNMCON: TStringField
+      FieldName = 'NMCON'
+      Size = 40
+    end
+    object cdsDivSTATUS: TStringField
+      FieldName = 'STATUS'
+      FixedChar = True
+      Size = 2
+    end
+    object cdsDivVALOR: TFMTBCDField
+      FieldName = 'VALOR'
+      Precision = 18
+      Size = 2
+    end
+    object cdsDivDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object cdsDivDTVEN: TDateField
+      FieldName = 'DTVEN'
+    end
+    object cdsDivPARCELA: TIntegerField
+      FieldName = 'PARCELA'
+    end
+  end
+  object dspDiv: TDataSetProvider
+    DataSet = sqlDiv
+    Left = 88
+    Top = 287
+  end
+  object sqlDiv: TSQLQuery
+    Active = True
+    MaxBlobSize = 1
+    Params = <>
+    SQL.Strings = (
+      
+        'select con.nmcon,div.status,div.valor,div.dtope,div.dtven,div.pa' +
+        'rcela'
+      'from fi01div div'
+      'inner join fi01con con on con.cdcon = div.cdcon')
+    SQLConnection = testeBanco
+    Left = 144
+    Top = 296
+    object sqlDivNMCON: TStringField
+      FieldName = 'NMCON'
+      Size = 40
+    end
+    object sqlDivSTATUS: TStringField
+      FieldName = 'STATUS'
+      FixedChar = True
+      Size = 2
+    end
+    object sqlDivVALOR: TFMTBCDField
+      FieldName = 'VALOR'
+      Precision = 18
+      Size = 2
+    end
+    object sqlDivDTOPE: TDateField
+      FieldName = 'DTOPE'
+    end
+    object sqlDivDTVEN: TDateField
+      FieldName = 'DTVEN'
+    end
+    object sqlDivPARCELA: TIntegerField
+      FieldName = 'PARCELA'
+    end
+  end
+  object sdsUtilResBan: TSimpleDataSet
+    Aggregates = <>
+    Connection = Banco
+    DataSet.CommandText = 'select max(cdban)  from FI01ban'
+    DataSet.MaxBlobSize = -1
+    DataSet.Params = <>
+    Params = <>
+    Left = 504
+    Top = 304
+    object sdsUtilResBanMAX: TIntegerField
+      FieldName = 'MAX'
+    end
+  end
+end

@@ -1,0 +1,238 @@
+﻿unit uClasseBackup;
+
+interface
+
+uses
+  uConn, Data.SqlExpr, Data.DB,System.classes, Vcl.DBGrids, Vcl.StdCtrls,
+  IBX.IBServices;
+
+Type
+    TBackup = class
+    private
+    // A varialve Conex�o receber a class da Unit uConn
+    Conexao: TConn;
+    // propriendades do usuario
+    FHrOpe : String;
+    FDir : string;
+    FDtOpe : string;
+    FIdenti : String;
+
+    FQry: TSQLQuery;
+    FDs: TDataSource;
+    FDsPesquisa: tDataSource;
+    FQryPesquisa: TSQLQuery;
+
+    procedure SetQry(const Value: TSQLQuery);
+    procedure SetQryPesquisa(const Value: TSQLQuery);
+    procedure SetDs(const Value: TDataSource);
+    procedure SetDsPesquisa(const Value: TDataSource);
+    procedure SetDir(const Value: String);
+    procedure SetDtOpe(const Value: String);
+    procedure SetHrOpe(const Value: String);
+    procedure SetIdenti(const Value: String);
+
+    public
+    constructor Create(Conn : TConn);
+
+    //Propriedades
+    property HrOpe : String read FHrOpe write SetHrOpe;
+    property Dir : String read FDir write SetDir;
+    property DtOpe: String read FDtOpe write SetDtOpe;
+    property Identi: String read FIdenti write SetIdenti;
+
+  // Componentes
+    property Qry : TSQLQuery read FQry write SetQry;
+    property QryPesquisa : TSQLQuery read FQryPesquisa write SetQryPesquisa;
+    property Ds : TDataSource read FDs write SetDs;
+    property DsPesquisa : TDataSource read FDsPesquisa write SetDsPesquisa;
+
+    //Metodos
+    function UltimoBkp( Identi: String; Dt: Boolean ): String;
+    function SelectDir(Title : string) : string;
+
+    procedure Inserir( Dir, Identi: String );
+    procedure IniciaBackup( DirBanco, DirBackup: String; Mm: TMemo;
+                          BackupBanco: TIBBackupService );
+    procedure IniciaRestore( DirBackup, DirRestore: String; Mm: TMemo;
+                            RestoreBanco: TIBRestoreService );
+end;
+
+implementation
+
+uses
+  System.SysUtils, uBancoConn, uLibrary, uClasseSQL, Vcl.FileCtrl, Vcl.Forms,
+  Winapi.Windows, Vcl.Controls;
+
+constructor TBackup.Create(Conn : TConn);
+begin
+  { No create � passado a conex�o das Query }
+  Conexao := Conn;
+  Qry := TSQLQuery.Create(nil);
+  Ds := TDataSource.Create(nil);
+
+  QryPesquisa := TSQLQuery.Create(nil);
+  DsPesquisa := TDataSource.Create(nil);
+  // Conecta a Query no TSQLconnection
+  Qry.SQLConnection := Conexao.ConexaoBanco;
+  QryPesquisa.SQLConnection := Conexao.ConexaoBanco;
+
+  Ds.DataSet := Qry;
+  DsPesquisa.DataSet := QryPesquisa;
+end;
+
+function TBackup.UltimoBkp( Identi: String; Dt: Boolean ): String;
+begin
+  with QryPesquisa do begin
+    Close;
+    SQL.Text := ' select bkp.dtope, bkp.hrope from backup bkp '+
+                ' where bkp.identi = :IDENTI '+
+                ' order by bkp.dtope, bkp.hrope desc ';
+    Params.ParamByName('IDENTI').Value := Identi;
+    try
+      Open;
+      if Dt then
+        Result := FieldByName('dtope').AsString
+      else
+        Result := FieldByName('hrope').AsString;
+      except
+        Result := '';
+      end;
+  end
+end;
+
+function TBackup.SelectDir(Title: string): string;
+var
+  Pasta : String;
+begin
+  SelectDirectory(Title, '', Pasta);
+  if (Trim(Pasta) <> '') then
+    if (Pasta[Length(Pasta)] <> '\') then
+      Pasta := Pasta + '\';
+  Result := Pasta;
+end;
+
+procedure TBackup.Inserir( Dir, Identi: String );
+begin
+  with Qry do begin
+    Close;
+    SQL.Text := ' insert into backup( dtope, hrope, dir, identi ) '+
+                ' values ( :DTOPE, :HROPE, :DIR, :IDENTI ) ';
+    Params.ParamByName('HROPE').Value := Time;
+    Params.ParamByName('DTOPE').Value := Date;
+    Params.ParamByName('DIR').Value := Dir;
+    Params.ParamByName('IDENTI').Value := Identi;
+    ExecSQL();
+  end;
+end;
+
+procedure TBackup.IniciaBackup(DirBanco, DirBackup: String; Mm: TMemo;
+  BackupBanco: TIBBackupService);
+begin
+  if DirBanco = EmptyStr then
+    Application.MessageBox(' Arquivo de Backup não informado. '+
+                          ' Por favor informe o aqruivo!!! ','Atenção',MB_OK)
+  else
+    try
+      // muda o cursos do mouse
+      Screen.Cursor := crHourGlass;
+      with BackupBanco do
+      begin
+        Attach;
+        LoginPrompt := False;
+        // Passa o caminho do banco de dados
+        DatabaseName := DirBanco;
+        // Passa o caminho do local do backup
+        BackupFile.Add( DirBackup );
+        Active := True;
+        Verbose := True;
+        // inicia o backup
+        ServiceStart;
+        while not Eof do begin
+          // mostra o andamento no TMemo
+          Mm.Lines.Add(GetNextLine)
+        end;
+        Active := False;
+      end;
+    finally
+      Screen.Cursor := crDefault;
+      // informa se o processo ocorreu com sucesso
+      Application.MessageBox(' Backup efetuado com sucesso!!! ','Confirmação ',MB_OK);
+      // Inserir a data e hora do backup
+      Inserir( DirBackup, 'BK' );
+    end;
+    Application.ProcessMessages;
+end;
+
+procedure TBackup.IniciaRestore(DirBackup, DirRestore: String; Mm: TMemo;
+  RestoreBanco: TIBRestoreService);
+begin
+  try
+    Screen.Cursor := crHourGlass;
+    with RestoreBanco do
+    begin
+      Attach;
+      Options := [Replace];
+      // Passa o caminho do backup
+      BackupFile.Add( DirBackup );
+      // Passa o caminho aonde vai ser gerado o Banco.FDB
+      DatabaseName.Add( DirRestore );
+      Verbose := True;
+      Active := True;
+      // Inicia a restauração
+      ServiceStart;
+      while not Eof do begin
+        // mostra o andamento no TMemo
+        Mm.Lines.Add(GetNextLine)
+      end;
+      Active := False;
+    end;
+  finally
+    Application.MessageBox(' Restauração efetuado com sucesso ','Confirmação ',MB_OK);
+    Screen.Cursor := crDefault;
+    // Inserir a data e hora do backup
+    Inserir( DirRestore, 'RT' );
+  end;
+  Application.ProcessMessages;
+end;
+
+procedure TBackup.SetDir(const Value: String);
+begin
+  FDir := Value;
+end;
+
+procedure TBackup.SetDs(const Value: TDataSource);
+begin
+  FDs := Value;
+end;
+
+procedure TBackup.SetDsPesquisa(const Value: TDataSource);
+begin
+  FDsPesquisa := Value;
+end;
+
+procedure TBackup.SetDtOpe(const Value: String);
+begin
+  FDtOpe := Value;
+end;
+
+procedure TBackup.SetHrOpe(const Value: String);
+begin
+  FHrOpe := Value;
+end;
+
+procedure TBackup.SetIdenti(const Value: String);
+begin
+  FIdenti := Value;
+end;
+
+procedure TBackup.SetQry(const Value: TSQLQuery);
+begin
+  FQry := Value;
+end;
+
+procedure TBackup.SetQryPesquisa(const Value: TSQLQuery);
+begin
+  FQryPesquisa := Value;
+end;
+
+end.
